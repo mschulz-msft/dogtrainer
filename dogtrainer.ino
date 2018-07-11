@@ -198,28 +198,3 @@ void loop() {
 	ble.waitForOK();
 }
 
-///**************************************************************************/
-///*!
-//@brief  Checks for user input (via the Serial Monitor)
-//*/
-///**************************************************************************/
-//bool getUserInput(char buffer[], uint8_t maxSize)
-//{
-//	// timeout in 100 milliseconds
-//	TimeoutTimer timeout(100);
-//
-//	memset(buffer, 0, maxSize);
-//	while ((!Serial.available()) && !timeout.expired()) { delay(1); }
-//
-//	if (timeout.expired()) return false;
-//
-//	delay(2);
-//	uint8_t count = 0;
-//	do
-//	{
-//		count += Serial.readBytes(buffer + count, maxSize);
-//		delay(2);
-//	} while ((count < maxSize) && (Serial.available()));
-//
-//	return true;
-//}
