@@ -15,10 +15,12 @@
 // i2c
 Adafruit_LSM9DS1 lsm = Adafruit_LSM9DS1();
 
+//Bluefruit settings
 #define FACTORYRESET_ENABLE         0
 #define MINIMUM_FIRMWARE_VERSION    "0.6.6"
 #define MODE_LED_BEHAVIOUR          "MODE"
 
+//Accerlerometer/ Gyroscope
 #define LSM9DS1_SCK A5
 #define LSM9DS1_MISO 12
 #define LSM9DS1_MOSI A4
@@ -27,6 +29,7 @@ Adafruit_LSM9DS1 lsm = Adafruit_LSM9DS1();
 
 #include <LiquidCrystal.h>
 
+//Pin for range sensor
 int analogpin = 3;
 
 int val = 0;
@@ -95,7 +98,7 @@ void setup() {
 	//ble.info();
 
 	//Set name of the BT device
-	ble.sendCommandCheckOK("AT+GAPDEVNAME=dogtrainer");
+	ble.sendCommandCheckOK("AT+GAPDEVNAME=PupPod Wobbler");
 	Serial.println("Device name set");
 
 	ble.verbose(false);  // debug info is a little annoying after this point!
@@ -125,14 +128,15 @@ void setup() {
 void loop() {
 
 	int distsensor, i;
-	long anVolt, mm;
+	long anVolt;
+  
 
 	anVolt = 0;
 
 	anVolt += analogRead(3);
 
-	mm = anVolt * 5; //Takes bit count and converts it to mm
-
+	//mm = anVolt * 5; //Takes bit count and converts it to mm
+    //mm = "CMD-ACCESSORY-FEED";
 
 	delay(100);
 	
@@ -142,10 +146,10 @@ void loop() {
 	lcd.setCursor(8, 0);
 	lcd.print("    ");
 	lcd.setCursor(8, 0);
-	lcd.print(mm);
-	Serial.println(mm);
+//	lcd.print(mm);
+	Serial.println("Feed me");
 
-	delay(500);                        // Read every half second
+	delay(100);                        // Read every half second
 
 
 
@@ -176,7 +180,7 @@ void loop() {
 	char inputs[BUFSIZE + 1];
 
 		ble.print("AT+BLEUARTTX=");
-		ble.println(mm);
+		ble.println("CMD-ACCESSORY-FEED\n\r");
 		ble.println("\n\r");
 		
 
